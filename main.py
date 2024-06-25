@@ -7,18 +7,18 @@ pygame.init()
 
 relogio = pygame.time.Clock()
 icone  = pygame.image.load("assets/icone.png")
-iron = pygame.image.load("assets/iron.png")
+iron = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/direita.png")
 fundo = pygame.image.load("assets/fundo.png")
 fundoStart = pygame.image.load("assets/fundoStart.png")
-fundoDead = pygame.image.load("assets/fundoDead.png")
+fundoDead = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de morte.png")
 
-missel = pygame.image.load("assets/missile.png")
+missel = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Sem título.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
 pygame.display.set_caption("Iron Man do Marcão")
 pygame.display.set_icon(icone)
 missileSound = pygame.mixer.Sound("assets/missile.wav")
-explosaoSound = pygame.mixer.Sound("assets/explosao.wav")
+explosaoSound = pygame.mixer.Sound("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Dark Sousl III - Você Morreu  Tela de Morte - 128.wav")
 fonte = pygame.font.SysFont("comicsans",28)
 fonteStart = pygame.font.SysFont("comicsans",55)
 fonteMorte = pygame.font.SysFont("arial",120)
@@ -32,7 +32,7 @@ def jogar(nome):
     pygame.mixer.Sound.play(missileSound)
     pygame.mixer.music.play(-1)
     posicaoXPersona = 400
-    posicaoYPersona = 300
+    posicaoYPersona = 600
     movimentoXPersona  = 0
     movimentoYPersona  = 0
     posicaoXMissel = 400
@@ -41,8 +41,8 @@ def jogar(nome):
     pontos = 0
     larguraPersona = 250
     alturaPersona = 127
-    larguaMissel  = 50
-    alturaMissel  = 250
+    larguaMissel  = 53
+    alturaMissel  = 121
     dificuldade  = 20
 
     while True:
@@ -57,14 +57,7 @@ def jogar(nome):
                 movimentoXPersona = 0
             elif evento.type == pygame.KEYUP and evento.key == pygame.K_LEFT:
                 movimentoXPersona = 0
-            elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_UP:
-                movimentoYPersona = -10
-            elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_DOWN:
-                movimentoYPersona = 10
-            elif evento.type == pygame.KEYUP and evento.key == pygame.K_UP:
-                movimentoYPersona = 0
-            elif evento.type == pygame.KEYUP and evento.key == pygame.K_DOWN:
-                movimentoYPersona = 0
+
                 
         posicaoXPersona = posicaoXPersona + movimentoXPersona            
         posicaoYPersona = posicaoYPersona + movimentoYPersona            
