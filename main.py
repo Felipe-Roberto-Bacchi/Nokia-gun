@@ -11,8 +11,9 @@ iron = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/asse
 fundo = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/cenario.png")
 fundoStart = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de inicio.png")
 fundoDead = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de morte.png")
-
-missel = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Sem título.png")
+inimigo2=pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/inimigo 2.png")
+gun=pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Sem título.png")
+missel = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/inimigo 1.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
 pygame.display.set_caption("Iron Man do Marcão")
@@ -40,12 +41,17 @@ def jogar(nome):
     posicaoXMissel = 400
     posicaoYMissel = -240
     velocidadeMissel = 1
+    posicaoXinimigo2 = 400
+    posicaoYinimigo2 = -240
+    velocidadeinimigo2 = 1
+    larguainimigo2 =57
+    alturainimigo2 = 112
     pontos = 0
     posicaoxGun= 400
     posicaoyGun= 470
     larguaGun=53
     alturaGun=121
-    velocidadegun = -5
+    velocidadegun = -80
     larguraPersona = 126
     alturaPersona = 96
     larguaMissel  = 53
@@ -86,20 +92,27 @@ def jogar(nome):
         posicaoYMissel = posicaoYMissel + velocidadeMissel
         if posicaoYMissel > 600:
             posicaoYMissel = -240
-            pontos = pontos + 1
             velocidadeMissel = velocidadeMissel + 1
             posicaoXMissel = random.randint(0,800)
             pygame.mixer.Sound.play(missileSound)
           
+        posicaoYinimigo2 = posicaoYinimigo2 + velocidadeinimigo2
+        if posicaoYinimigo2 > 600:
+            posicaoYinimigo2 = -240
+            velocidadeinimigo2 = velocidadeinimigo2 + 1
+            posicaoXinimigo2 = random.randint(0,800)
+            pygame.mixer.Sound.play(missileSound)
+        
         posicaoyGun= velocidadegun + posicaoyGun
         if posicaoyGun < 0 :
-            posicaoxGun = posicaoXPersona
+            posicaoxGun = posicaoXPersona +20
             posicaoyGun = posicaoYPersona
         
-        
-        tela.blit( missel, (posicaoxGun,posicaoyGun) )
+        tela.blit( gun, (posicaoxGun,posicaoyGun) )
             
         tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
+        
+        tela.blit( inimigo2, (posicaoXinimigo2, posicaoYinimigo2) )
         
         texto = fonte.render(nome+"- Pontos: "+str(pontos), True, branco)
         tela.blit(texto, (10,10))
@@ -108,12 +121,19 @@ def jogar(nome):
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+alturaPersona))
         pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + larguaMissel))
         pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + alturaMissel))
+        pixelsinimigo2X = list(range(posicaoXinimigo2, posicaoXinimigo2 + larguainimigo2))
+        pixelsinimigo2y = list(range(posicaoYinimigo2, posicaoYinimigo2 + alturainimigo2))
         pixelsGunx = list(range(posicaoxGun, posicaoxGun+larguaGun))
         pixelsGuny = list(range(posicaoyGun, posicaoyGun+alturaGun))
+        
         
         #print( len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )   )
         if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
             if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+                dead(nome, pontos)
+        
+        if  len( list( set(pixelsinimigo2y).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelsinimigo2X).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
                 dead(nome, pontos)
         
         if len(list(set (pixelsGuny).intersection(set(pixelsMisselY))) ) > dificuldade:
@@ -126,8 +146,15 @@ def jogar(nome):
                 posicaoXMissel = random.randint(0,800)
                 pygame.mixer.Sound.play(missileSound)
                 tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
-                if velocidadeMissel < 4:
-                    velocidadeMissel-1
+        
+        if len(list(set (pixelsGuny).intersection(set(pixelsinimigo2y))) ) > dificuldade:
+            if len(list(set(pixelsGunx).intersection(set(pixelsinimigo2X)))) > dificuldade:
+                posicaoYinimigo2 > 600
+                posicaoYinimigo2 = -240
+                velocidadeinimigo2 = velocidadeinimigo2 + 1
+                posicaoXinimigo2 = random.randint(0,800)
+                pygame.mixer.Sound.play(missileSound)
+        
         pygame.display.update()
         relogio.tick(60)
             
