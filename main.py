@@ -22,23 +22,30 @@ explosaoSound = pygame.mixer.Sound("C:/Users/notga/OneDrive/Área de Trabalho/Ir
 fonte = pygame.font.SysFont("comicsans",28)
 fonteStart = pygame.font.SysFont("comicsans",55)
 fonteMorte = pygame.font.SysFont("arial",120)
-pygame.mixer.music.load("assets/ironsound.mp3")
+pygame.mixer.music.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/batalha boss.mp3")
 
 branco = (255,255,255)
 preto = (0, 0 ,0 )
 
+posicaoXPersona = 400
+posicaoYPersona = 470
 
 def jogar(nome):
+    global posicaoXPersona,posicaoYPersona
     pygame.mixer.Sound.play(missileSound)
     pygame.mixer.music.play(-1)
-    posicaoXPersona = 400
-    posicaoYPersona = 470
+    
     movimentoXPersona  = 0
     movimentoYPersona  = 0
     posicaoXMissel = 400
     posicaoYMissel = -240
     velocidadeMissel = 1
     pontos = 0
+    posicaoxGun= 400
+    posicaoyGun= 470
+    larguaGun=53
+    alturaGun=121
+    velocidadegun = -5
     larguraPersona = 126
     alturaPersona = 96
     larguaMissel  = 53
@@ -73,6 +80,9 @@ def jogar(nome):
         #pygame.draw.circle(tela, preto, (posicaoXPersona,posicaoYPersona), 40, 0 )
         tela.blit( iron, (posicaoXPersona, posicaoYPersona) )
         
+        
+            
+        
         posicaoYMissel = posicaoYMissel + velocidadeMissel
         if posicaoYMissel > 600:
             posicaoYMissel = -240
@@ -80,7 +90,14 @@ def jogar(nome):
             velocidadeMissel = velocidadeMissel + 1
             posicaoXMissel = random.randint(0,800)
             pygame.mixer.Sound.play(missileSound)
-            
+          
+        posicaoyGun= velocidadegun + posicaoyGun
+        if posicaoyGun < 0 :
+            posicaoxGun = posicaoXPersona
+            posicaoyGun = posicaoYPersona
+        
+        
+        tela.blit( missel, (posicaoxGun,posicaoyGun) )
             
         tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
         
@@ -91,17 +108,34 @@ def jogar(nome):
         pixelsPersonaY = list(range(posicaoYPersona, posicaoYPersona+alturaPersona))
         pixelsMisselX = list(range(posicaoXMissel, posicaoXMissel + larguaMissel))
         pixelsMisselY = list(range(posicaoYMissel, posicaoYMissel + alturaMissel))
+        pixelsGunx = list(range(posicaoxGun, posicaoxGun+larguaGun))
+        pixelsGuny = list(range(posicaoyGun, posicaoyGun+alturaGun))
         
         #print( len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )   )
         if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
             if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
                 dead(nome, pontos)
         
-    
-        
+        if len(list(set (pixelsGuny).intersection(set(pixelsMisselY))) ) > dificuldade:
+            if len(list(set(pixelsGunx).intersection(set(pixelsMisselX)))) > dificuldade:
+                posicaoYMissel = posicaoYMissel + velocidadeMissel
+                posicaoYMissel > 600
+                posicaoYMissel = -240
+                pontos = pontos + 1
+                velocidadeMissel = velocidadeMissel + 1
+                posicaoXMissel = random.randint(0,800)
+                pygame.mixer.Sound.play(missileSound)
+                tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
+                if velocidadeMissel < 4:
+                    velocidadeMissel-1
         pygame.display.update()
         relogio.tick(60)
+            
 
+            
+            
+                
+            
 
 def dead(nome, pontos):
     pygame.mixer.music.stop()
