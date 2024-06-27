@@ -6,24 +6,25 @@ from tkinter import simpledialog
 pygame.init()
 
 relogio = pygame.time.Clock()
-icone  = pygame.image.load("assets/icone.png")
-iron = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/direita.png")
-fundo = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/cenario.png")
-fundoStart = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de inicio.png")
-fundoDead = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de morte.png")
-inimigo2 = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/inimigo 2.png")
-gun = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Sem título.png")
-missel = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/inimigo 1.png")
-tamanho = (800, 600)
-tela = pygame.display.set_mode(tamanho)
-pygame.display.set_caption("Iron Man do Marcão")
+icone  = pygame.image.load("Recursos\icome nokia.ico")
+iron = pygame.image.load("Recursos\direita.png")
+fundo = pygame.image.load("Recursos\cenario.png")
+fundoStart = pygame.image.load("Recursos/tela de inicio.png")
+fundoDead = pygame.image.load("Recursos/tela de morte.png")
+inimigo2=pygame.image.load("Recursos\inimigo 2.png")
+gun=pygame.image.load("Recursos/nokia martelo top.png")
+logoVoadora=pygame.image.load("Recursos\logo voadora.png")
+missel = pygame.image.load("Recursos\inimigo 1.png")
+tamanho = (800,600)
+tela = pygame.display.set_mode( tamanho ) 
+pygame.display.set_caption("Nokia Gun")
 pygame.display.set_icon(icone)
-missileSound = pygame.mixer.Sound("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Efeito sonoro - Som de queda - 128.mp3")
-
-fonte = pygame.font.SysFont("comicsans", 28)
-fonteStart = pygame.font.SysFont("comicsans", 55)
-fonteMorte = pygame.font.SysFont("arial", 120)
-pygame.mixer.music.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/batalha boss.mp3")
+missileSound = pygame.mixer.Sound("Recursos\Efeito sonoro - Som de queda - 128.mp3")
+explosaoSound = pygame.mixer.Sound("Recursos\Dark Sousl III - Você Morreu  Tela de Morte - 128.wav")
+fonte = pygame.font.SysFont("comicsans",28)
+fonteStart = pygame.font.SysFont("comicsans",55)
+fonteMorte = pygame.font.SysFont("arial",120)
+pygame.mixer.music.load("Recursos/batalha boss.mp3")
 
 branco = (255, 255, 255)
 preto = (0, 0, 0)
@@ -168,6 +169,11 @@ def jogar(nome):
 
         pygame.display.update()
         relogio.tick(60)
+
+
+
+def dead(nome, pontos):
+    pygame.mixer
 
 
 

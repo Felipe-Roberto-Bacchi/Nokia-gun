@@ -1,33 +1,34 @@
 import pygame
 import random
-import os
+import time
 from tkinter import simpledialog
 
 pygame.init()
 
 relogio = pygame.time.Clock()
-icone  = pygame.image.load("assets/icone.png")
-iron = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/direita.png")
-fundo = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/cenario.png")
-fundoStart = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de inicio.png")
-fundoDead = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/tela de morte.png")
-inimigo2=pygame.image.load("assets\inimigo 2.png")
-gun=pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Sem título.png")
-missel = pygame.image.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/inimigo 1.png")
+icone  = pygame.image.load("Recursos\icome nokia.ico")
+nokiaMan = pygame.image.load("Recursos/Nokia Man.png")
+fundo = pygame.image.load("Recursos\cenario.png")
+fundoStart = pygame.image.load("Recursos/tela de inicio.png")
+fundoDead = pygame.image.load("Recursos/tela de morte.png")
+inimigo2=pygame.image.load("Recursos\inimigo 2.png")
+gun=pygame.image.load("Recursos/nokia martelo top.png")
+logoVoadora=pygame.image.load("Recursos\logo voadora.png")
+missel = pygame.image.load("Recursos\inimigo 1.png")
 tamanho = (800,600)
 tela = pygame.display.set_mode( tamanho ) 
-pygame.display.set_caption("Iron Man do Marcão")
+pygame.display.set_caption("Nokia Gun")
 pygame.display.set_icon(icone)
-missileSound = pygame.mixer.Sound("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Efeito sonoro - Som de queda - 128.mp3")
-explosaoSound = pygame.mixer.Sound("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/Dark Sousl III - Você Morreu  Tela de Morte - 128.wav")
+missileSound = pygame.mixer.Sound("Recursos\Efeito sonoro - Som de queda - 128.mp3")
+explosaoSound = pygame.mixer.Sound("Recursos\Dark Sousl III - Você Morreu  Tela de Morte - 128.wav")
 fonte = pygame.font.SysFont("comicsans",28)
 fonteStart = pygame.font.SysFont("comicsans",55)
 fonteMorte = pygame.font.SysFont("arial",120)
-pygame.mixer.music.load("C:/Users/notga/OneDrive/Área de Trabalho/IronMan/assets/batalha boss.mp3")
+pygame.mixer.music.load("Recursos/batalha boss.mp3")
 
 branco = (255,255,255)
 preto = (0, 0 ,0 )
-
+amarelo=(255,255,0)
 posicaoXPersona = 400
 posicaoYPersona = 470
 
@@ -51,7 +52,7 @@ def jogar(nome):
     alturaPersona = 96
     larguaMissel = 53
     alturaMissel = 121
-    dificuldade = 0
+    dificuldade = 20
     vidasMissel = 1
     vidas_inimigo2 = 3
     vidas_missel = 3
@@ -59,9 +60,15 @@ def jogar(nome):
     
     posicaoxGun = posicaoXPersona
     posicaoyGun = posicaoYPersona
-    larguaGun = 53
-    alturaGun = 121
+    larguaGun = 62
+    alturaGun = 120
     velocidadegun = -10
+    
+    logoVoadoraX=0
+    logoVoadoray=0
+    logoVoadoravelos= 1
+    aumetar_circulo = True
+    tamanhosol=25
     
     while True:
         for evento in pygame.event.get():
@@ -88,10 +95,32 @@ def jogar(nome):
             
         tela.fill(branco)
         tela.blit(fundo, (0,0) )
-        #pygame.draw.circle(tela, preto, (posicaoXPersona,posicaoYPersona), 40, 0 )
-        tela.blit( iron, (posicaoXPersona, posicaoYPersona) )
         
+        tela.blit( nokiaMan, (posicaoXPersona, posicaoYPersona) )
         
+        if logoVoadoraX == 0:
+            aleatologoX=random.randint(0,700)
+            aleatologoY=random.randint(0,500)
+        
+        if logoVoadoraX <= aleatologoX:
+            logoVoadoraX += 1
+            if aleatologoX == logoVoadoraX:
+                aleatologoX=random.randint(0,700)
+        
+        elif logoVoadoraX >= aleatologoX:
+            logoVoadoraX -= 1
+            if aleatologoX == logoVoadoraX:
+                aleatologoX=random.randint(0,700)
+        
+        if logoVoadoray <= aleatologoY:
+            logoVoadoray += 1
+            if aleatologoY == logoVoadoray:
+                aleatologoY=random.randint(0,500)
+        
+        elif logoVoadoray >= aleatologoY:
+            logoVoadoray -=1
+            if aleatologoY == logoVoadoray:
+                aleatologoY=random.randint(0,500)
             
         
         posicaoYMissel = posicaoYMissel + velocidadeMissel
@@ -102,7 +131,7 @@ def jogar(nome):
             pygame.mixer.Sound.play(missileSound)
             if velocidadeMissel < 5:
                 velocidadeMissel =velocidadeMissel-1
-            if pontos == 10:
+            if pontos >= 10:
                 vidasMissel = vidasMissel +1
         
         posicaoYinimigo2 = posicaoYinimigo2 + velocidadeinimigo2
@@ -113,11 +142,26 @@ def jogar(nome):
             pygame.mixer.Sound.play(missileSound)
             if velocidadeinimigo2 < 5:
                 velocidadeinimigo2 =velocidadeinimigo2 -1
-        
+            if pontos >= 10:
+                vidasMissel = vidasMissel +1
+                
         posicaoyGun= velocidadegun + posicaoyGun
         if posicaoyGun < 0 :
             posicaoxGun = posicaoXPersona +20
             posicaoyGun = posicaoYPersona
+        
+      
+        if aumetar_circulo:
+            tamanhosol += 0.2
+            if tamanhosol > 40:
+                aumetar_circulo = False
+        else:
+            tamanhosol -= 0.2
+            if tamanhosol < 20:
+                aumetar_circulo = True
+        pygame.draw.circle(tela, amarelo, (700,50), tamanhosol, 0 )
+            
+        
         
         tela.blit( gun, (posicaoxGun,posicaoyGun) )
 
@@ -127,6 +171,7 @@ def jogar(nome):
         texto_vidas_inimigo2 = fonte.render(str(vidas_inimigo2), True, branco)
         tela.blit(texto_vidas_inimigo2, (posicaoXinimigo2, posicaoYinimigo2 - 30))
         
+        tela.blit(logoVoadora,(logoVoadoraX,logoVoadoray))
         
         tela.blit( missel, (posicaoXMissel, posicaoYMissel) )
         
@@ -146,16 +191,16 @@ def jogar(nome):
         
         
         #print( len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )   )
-        if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
-                dead(nome, pontos)
+        #if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            #if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+                #dead(nome, pontos)
         
-        if  len( list( set(pixelsinimigo2y).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            if len( list( set(pixelsinimigo2X).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
-                dead(nome, pontos)
+        #if  len( list( set(pixelsinimigo2y).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            #if len( list( set(pixelsinimigo2X).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+                #dead(nome, pontos)
         
-        if len(list(set(pixelsGuny).intersection(set(pixelsMisselY)))) > dificuldade:
-            if len(list(set(pixelsGunx).intersection(set(pixelsMisselX)))) > dificuldade:
+        if len(list(set(pixelsGuny).intersection(set(pixelsMisselY)))) :
+            if len(list(set(pixelsGunx).intersection(set(pixelsMisselX)))) :
                 vidas_missel -= 1
                 if vidas_missel <= 0:
                     vidas_missel = 3
@@ -166,9 +211,11 @@ def jogar(nome):
                     pontos += 1
                 posicaoxGun = posicaoXPersona + 20
                 posicaoyGun = posicaoYPersona
+                if pontos >= 10:
+                    vidasMissel = vidasMissel +1
         
-        if len(list(set(pixelsGuny).intersection(set(pixelsinimigo2y)))) > dificuldade:
-            if len(list(set(pixelsGunx).intersection(set(pixelsinimigo2X)))) > dificuldade:
+        if len(list(set(pixelsGuny).intersection(set(pixelsinimigo2y)))) :
+            if len(list(set(pixelsGunx).intersection(set(pixelsinimigo2X)))) :
                 vidas_inimigo2 -= 1
                 if vidas_inimigo2 <= 0:
                     vidas_inimigo2 = 3
@@ -179,7 +226,8 @@ def jogar(nome):
                     pontos += 1
                 posicaoxGun = posicaoXPersona + 20
                 posicaoyGun = posicaoYPersona
-
+                if pontos >= 10:
+                    vidasMissel = vidasMissel +1
         
 
         pygame.display.update()
@@ -270,7 +318,7 @@ def ranking():
 
 
 def start():
-    nome = simpledialog.askstring("Iron Man","Nome Completo:")
+    nome = simpledialog.askstring("Nokia Gun","Nome Completo:")
     
     
     
