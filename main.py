@@ -191,13 +191,13 @@ def jogar(nome):
         
         
         #print( len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )   )
-        #if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            #if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
-                #dead(nome, pontos)
+        if  len( list( set(pixelsMisselY).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelsMisselX).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+                dead(nome, pontos)
         
-        #if  len( list( set(pixelsinimigo2y).intersection(set(pixelsPersonaY))) ) > dificuldade:
-            #if len( list( set(pixelsinimigo2X).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
-                #dead(nome, pontos)
+        if  len( list( set(pixelsinimigo2y).intersection(set(pixelsPersonaY))) ) > dificuldade:
+            if len( list( set(pixelsinimigo2X).intersection(set(pixelsPersonaX))   ) )  > dificuldade:
+                dead(nome, pontos)
         
         if len(list(set(pixelsGuny).intersection(set(pixelsMisselY)))) :
             if len(list(set(pixelsGunx).intersection(set(pixelsMisselX)))) :
